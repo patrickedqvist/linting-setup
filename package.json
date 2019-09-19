@@ -1,0 +1,45 @@
+{
+  "name": "parcel-test",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "parcel src/index.html",
+    "build": "parcel build src/scss/style.scss",
+    "lint": "eslint src/**/*.js & stylelint src/**/*.scss",
+    "format": "prettier --write \"src/**/*.+(js|jsx|json|yml|yaml|css|scss|md)\""
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "autoprefixer": "^9.6.1",
+    "eslint": "^6.4.0",
+    "eslint-config-prettier": "^6.3.0",
+    "eslint-plugin-prettier": "^3.1.1",
+    "husky": "^3.0.5",
+    "lint-staged": "^9.2.5",
+    "node-sass": "^4.12.0",
+    "parcel-bundler": "^1.12.3",
+    "postcss-flexbugs-fixes": "^4.1.0",
+    "postcss-modules": "^1.4.1",
+    "prettier": "^1.18.2",
+    "stylelint": "^11.0.0",
+    "stylelint-config-prettier": "^5.2.0",
+    "stylelint-prettier": "^1.1.1"
+  },
+  "dependencies": {},
+  "browserslist": [
+    "last 1 version",
+    "> 1%"
+  ],
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.+(js|jsx)": ["eslint --fix", "git add"],
+    "*.+(scss)": ["stylelint --fix", "git add"],
+    "*.+(scss|js|jsx)": ["prettier --write", "git add"]
+  }
+}
