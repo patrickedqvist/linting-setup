@@ -1,5 +1,7 @@
 // Settings
 @import 'settings/colors';
+@import 'settings/breakpoints';
+@import 'settings/mixins';
 
 // Globals
 @import 'reset';
@@ -10,5 +12,9 @@
 
 .grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(2, 1fr);
+
+  @include respond-to(tablets-and-up) {
+    grid-template-columns: repeat(4, 1fr);
+  }
 }

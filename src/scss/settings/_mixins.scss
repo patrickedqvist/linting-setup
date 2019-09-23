@@ -1,0 +1,112 @@
+@import './breakpoints';
+
+///
+/// Media queries mixin with defined parameter names and breakpoints
+///
+/// @param {String}     $media  - Device you want to use (use {device}-and-up or {device}-only)
+///
+/// @example scss - for tablets and wider screens
+///  @include respond-to(tablet-and-up)) { font-size: 35px; }
+///
+@mixin respond-to($media) {
+  @if $media == mobile-and-up {
+    @media only screen and (min-width: $breakpoint-small) {
+      @content;
+    }
+  }
+
+  @if $media == mobile-only {
+    @media only screen and (max-width: $breakpoint-medium - 1) {
+      @content;
+    }
+  }
+
+  @else if $media == tablet-and-up {
+    @media only screen and (min-width: $breakpoint-medium) {
+      @content;
+    }
+  }
+
+  @else if $media == tablet-only {
+    @media only screen and (min-width: $breakpoint-medium) and (max-width: $breakpoint-large - 1) {
+      @content;
+    }
+  }
+
+  @else if $media == desktop-and-up {
+    @media only screen and (min-width: $breakpoint-large) {
+      @content;
+    }
+  }
+
+  @else if $media == xl-desktop-and-up {
+    @media only screen and (min-width: $breakpoint-xlarge) {
+      @content;
+    }
+  }
+
+  @else if $media == retina {
+    @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+      @content;
+    }
+  }
+}
+
+///
+/// Viewport sized typography with minimum and maximum values
+///
+/// @author Eduardo Boucas (@eduardoboucas)
+///
+/// @param {Number}     $responsive  - Viewport-based size
+/// @param {Number}     $min         - Minimum font size (px)
+/// @param {Number}     $max         - Maximum font size (px)
+///                                  (optional)
+/// @param {Number}     $fallback    - Fallback for viewport-
+///                                  based units (optional)
+///
+/// @example scss - 5vw font size (with 50px fallback),
+///                 minumum of 35px and maximum of 150px
+///  @include responsive-font(5vw, 35px, 150px, 50px);
+///
+@mixin responsive-font($responsive, $min, $max: false, $fallback: false) {
+  $responsive-unitless: $responsive / ($responsive - $responsive + 1);
+  $dimension: if(unit($responsive) == 'vh', 'height', 'width');
+  $min-breakpoint: $min / $responsive-unitless * 100;
+
+  @media (max-#{$dimension}: #{$min-breakpoint}) {
+    font-size: $min;
+  }
+
+  @if $max {
+    $max-breakpoint: $max / $responsive-unitless * 100;
+
+    @media (min-#{$dimension}: #{$max-breakpoint}) {
+      font-size: $max;
+    }
+  }
+
+  @if $fallback {
+    font-size: $fallback;
+  }
+
+  font-size: $responsive;
+}
+
+///
+/// Aspect ratio for keeping aspect ratio of a element
+/// @see https://gist.github.com/jonathantneal/a9b8901273475d261dd3
+///
+@mixin fluid-aspect($ratio: 1 1, $selector: '> :first-child') {
+  $selector: unquote($selector);
+
+  padding-bottom: percentage(nth($ratio, 2) / nth($ratio, 1));
+  position: relative;
+
+  #{$selector} {
+    left: 0;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    width: 100%;
+  }
+}
