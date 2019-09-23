@@ -96,6 +96,10 @@
 /// Aspect ratio for keeping aspect ratio of a element
 /// @see https://gist.github.com/jonathantneal/a9b8901273475d261dd3
 ///
+/// @param {Number}     $ratio  - An aspect ratio represented as two numbers separated by a space. Defaults to 1:1
+/// @param {String}     $target  - A selector targeting the element to be made fluid. Defaults to "> :first-child"
+///
+///
 @mixin fluid-aspect($ratio: 1 1, $selector: '> :first-child') {
   $selector: unquote($selector);
 
